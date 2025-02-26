@@ -17,6 +17,7 @@ datasource db {
 // Tabela de clientes
 model Customer {
   id              Int           @id @default(autoincrement())
+  name            String        @default("João das Couves")
   ident_document  String
   birth_date      DateTime?     // ? significa que o campo é opcional
   street_name     String
