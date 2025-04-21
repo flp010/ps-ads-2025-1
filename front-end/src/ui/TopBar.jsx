@@ -8,6 +8,8 @@ import MainMenu from './MainMenu';
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
 
+import AuthWidgets from './AuthWidgets'
+
 export default function TopBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -21,9 +23,7 @@ export default function TopBar() {
             </Link>
           </Box>
 
-          <Link to="/login">
-            <Button color="secondary">Entrar</Button>
-          </Link>
+          <AuthWidgets />
 
         </Toolbar>
       </AppBar>
