@@ -15,6 +15,7 @@ const bypassRoutes = [
 
 export default function(req, res, next) {
 
+  //console.log(req.url)
   /*
     Verificamos se a rota interceptada corresponde a alguma das
     exceções cadastradas acima. Sendo o caso, permite continuar
