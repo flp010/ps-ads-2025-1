@@ -14,5 +14,6 @@ CREATE TABLE "Seller" (
 -- CreateIndex
 CREATE UNIQUE INDEX "Seller_indentity_document_key" ON "Seller"("indentity_document");
 
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Seller_email_key" ON "Seller"("email");
