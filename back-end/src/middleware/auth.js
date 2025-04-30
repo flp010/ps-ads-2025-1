@@ -9,13 +9,11 @@ import jwt from 'jsonwebtoken'
   necessidade de apresentação do token
 */
 const bypassRoutes = [
-  { url: '/users/login', method: 'POST' },
+  { url: '/users/login', method: 'POST' }
 ]
-
 
 export default function(req, res, next) {
 
-  //console.log(req.url)
   /*
     Verificamos se a rota interceptada corresponde a alguma das
     exceções cadastradas acima. Sendo o caso, permite continuar
