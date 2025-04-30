@@ -50,7 +50,7 @@ export default function AuthGuard({ children, userLevel = 0 }) {
     }
   }
 
-  // Este useEffect será executado sempre que a rota (location) for alterada
+  // Este useEffect será executado sempre que a rota (location) for alterada.
   React.useEffect(() => {
     /*
       Salva a rota atual para posterior redirecionamento (caso a rota atual

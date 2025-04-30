@@ -41,7 +41,7 @@ export default function UsersList() {
       field: 'is_admin',
       headerName: 'É admin?',
       width: 150,
-      renderCell: (params) => (params.row.imported ? <CheckBoxIcon /> : '')
+      renderCell: (params) => (params.row.is_admin? <CheckBoxIcon /> : '')
     },
     {
       field: '_actions',
@@ -80,7 +80,7 @@ export default function UsersList() {
     loadData()
   }, [])  // Vetor de dependências vazio, executa uma vez no mount
 
-  // Função para carregar os dados da API
+  // Função para carregar os dados da API.
   async function loadData() {
     feedbackWait(true)
     try {

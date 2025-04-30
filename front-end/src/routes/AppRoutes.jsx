@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import AuthGuard from './AuthGuard'
 
-import routes from './routes.js'
+import routes from './routes'
 
 export default function AppRoutes() {
   return (
@@ -26,4 +26,3 @@ export default function AppRoutes() {
     </Routes>
   )
 }
-Comment
