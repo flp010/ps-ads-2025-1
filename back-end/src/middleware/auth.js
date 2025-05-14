@@ -28,7 +28,14 @@ export default function(req, res, next) {
 
   /* PROCESSO DE VERIFICAÇÃO DO TOKEN DE AUTORIZAÇÃO */
   let token
+
+  // 1. PROCURA O TOKEN EM UM COOKIE
+  token = req.cookies[process.env.AUTH_COOKIE_NAME]
+
+  // 2. SE NÃO HOUVER TOKEN NO COOKIE, PROCURA NO HEADER DE 
+  // AUTORIZAÇÃO
   
+  if(! token) {
   // Procura o token no cabeçalho de autorização
   const authHeader = req.headers['authorization']
 
@@ -40,7 +47,7 @@ export default function(req, res, next) {
     console.error('ERRO DE AUTORIZAÇÃO: falta de cabeçalho')
     return res.status(403).end()
   }
-  
+
   /*
     O cabeçalho de autorização tem o formato "Bearer XXXXX",
     onde "XXXXX" é o token. Portanto, precisamos dividir esse
@@ -49,7 +56,7 @@ export default function(req, res, next) {
     (índice 1).
   */
   token = authHeader.split(' ')[1]
-
+}
   // Validação do token
   jwt.verify(token, process.env.TOKEN_SECRET, (error, user) => {
 
