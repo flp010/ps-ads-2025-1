@@ -1,9 +1,19 @@
 import prisma from '../database/client.js'
+import Cars from '../models/Cars.js'
+import { ZodError } from 'zod'
+
 
 const controller = {}   // Objeto vazio
 
 controller.create = async function (req, res) {
   try {
+
+    // Executa a validação do modelo do Zod para os
+    // dados que vieram em req.body
+    Cars.parse(req.body)
+
+    console.log('DADOS:', req.body)
+
     // Dentro do parâmetro req (requisição), haverá
     // um objeto chamado "body" que contém as informações
     // que queremos armazenar do BD. Então, invocamos o
@@ -22,6 +32,12 @@ controller.create = async function (req, res) {
     // o código HTTP correspondente a erro do servidor
     // HTTP 500: Internal Server Error
     console.error(error)
+    // Se for erro de validação do Zod, retorna
+    // HTTP 422: Unprocessable entity
+    if(error instanceof ZodError) res.status(422).send(error.issues)  
+    
+      // Senão, retorna o habitual HTTP 500: Internal Server Error
+    else
     res.status(500).end()
   }
 }
@@ -73,6 +89,10 @@ controller.retrieveOne = async function (req, res) {
 
 controller.update = async function(req, res) {
   try {
+    // Executa a validação do modelo do Zod para os
+    // dados que vieram em req.body
+    Cars.parse(req.body)
+    
     // Busca o registro no banco de dados pelo seu id
     // e atualiza as informações com o conteúdo de req.body
     await prisma.car.update({

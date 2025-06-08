@@ -13,6 +13,8 @@ import { feedbackWait, feedbackNotify, feedbackConfirm } from '../../ui/Feedback
 import { useNavigate, useParams } from 'react-router-dom'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
+import Cars from '../../models/Cars'
+import { ZodError } from 'zod'
 
 import fetchAuth from '../../lib/fetchAuth'
 
@@ -115,6 +117,9 @@ export default function CarsForm() {
     event.preventDefault()      // Impede o recarregamento da página
     feedbackWait(true)
     try {
+
+      // Invoca a validação do Zod
+      Cars.parse(car)
       /* Infoca o fetch para enviar os dados ao back-end.
       Se houver parâmetro na rota, significa que estamos alterando
       um registro existente e, portanto, o verbo precisa ser PUT */
@@ -135,10 +140,20 @@ export default function CarsForm() {
     }
     catch(error) {
       console.log(error)
-      feedbackNotify('ERRO: ' + error.message, 'error')
-    }
-    finally {
-      feedbackWait(false)
+      
+      if(error instanceof ZodError) {
+              // Formamos um objeto contendo os erros do Zod e os colocamos
+              // na variável de estado inputErrors
+              const errorMessages = {}
+              for(let i of error.issues) errorMessages[i.path[0]] = i.message
+              setState({ ...state, inputErrors: errorMessages })
+              feedbackNotify('Há campos com valores inválidos. Verifique.', 'error')
+            }
+            else feedbackNotify('ERRO: ' + error.message, 'error')
+          }
+    
+      finally{
+        feedbackWait(false)
     }
   }
 
