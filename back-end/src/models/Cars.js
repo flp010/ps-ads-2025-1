@@ -3,7 +3,7 @@ import { z } from 'zod'
 const colors = [
   'AMARELO', 'AZUL', 'BRANCO', 'CINZA', 'DOURADO',
   'LARANJA', 'MARROM', 'PRATA', 'PRETO', 'ROSA',
-  'ROXO',  'VERMELHO'
+  'ROXO', 'VERDE','VERMELHO'
 ]
 
 const maxDate = new Date()
