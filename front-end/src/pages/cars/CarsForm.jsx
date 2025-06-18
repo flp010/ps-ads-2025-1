@@ -83,24 +83,22 @@ export default function CarsForm() {
   }, [])
 
   // Função para carregar os dados de um carro existente da API
-  async function loadData() {
-    feedbackWait(true)
-    try {
-      const response = await fetchAuth.get('//' + params.id)
-      const result = await response.json()
-      
-      /*Converte o formato da data armazenado no banco de dados para o formato reconhecido pelo componente DatePicker */
-      if(result.selling_date) result.selling_date = parseISO(result.selling_date)
-      setState({ ...state, car: result, formModified: false })
-    }
-    catch(error) {
-      console.log(error)
-      feedbackNotify('ERRO: ' + error.message, 'error')
-    }
-    finally {
-      feedbackWait(false)
-    }
+  // Correção para a função loadData
+async function loadData() {
+  feedbackWait(true)
+  try {
+    const result = await fetchAuth.get('/cars/' + params.id)
+    
+    if (result.selling_date) result.selling_date = parseISO(result.selling_date)
+
+    setState({ ...state, car: result, formModified: false })
+  } catch (error) {
+    console.log(error)
+    feedbackNotify('ERRO: ' + error.message, 'error')
+  } finally {
+    feedbackWait(false)
   }
+}
 
   /* Preenche o campo do objeto car conforme o campo correspondente do formulário for modificado */
   function handleFieldChange(event) {
